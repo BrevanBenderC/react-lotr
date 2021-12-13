@@ -23,8 +23,9 @@ function App() {
     });
 
     const data = await resp.json();
-    const transformData = data.docs.map((film) => [
-      film.name,
+    const transformData = data.map((film) => [
+      film.title,
+      film.title.trim().toLowerCase().split(' ').join('-'),
       film.boxOfficeRevenueInMillions,
       film.academyAwardNominations,
     ]);
@@ -33,14 +34,15 @@ function App() {
   };
 
   const getCharacters = async () => {
-    const resp = await fetch('https://the-one-api.dev/v2/character/?limit=25', {
+    const resp = await fetch(`${process.env.REACT_APP_SUPABASE_URL}/rest/v1/characters`, {
       headers: {
-        Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`,
+        apikey: process.env.REACT_APP_SUPABASE_KEY,
+        Authorization: `Bearer ${process.env.REACT_APP_SUPABASE_KEY}`,
       },
     });
 
     const data = await resp.json();
-    const transformData = data.docs.map((character) => ({
+    const transformData = data.map((character) => ({
       ...character,
       dates:
         character.birth && character.death ? `${character.birth} - ${character.death}` : 'Unknown',
