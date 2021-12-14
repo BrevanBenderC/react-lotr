@@ -26,8 +26,8 @@ function App() {
     const transformData = data.map((film) => [
       film.title,
       film.title.trim().toLowerCase().split(' ').join('-'),
-      film.boxOfficeRevenueInMillions,
-      film.academyAwardNominations,
+      film.box_office_total,
+      film.academy_award_nominations,
     ]);
 
     setFilms(transformData);
